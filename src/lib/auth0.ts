@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 export const auth0 = new Auth0Client();
 
-const ROLES_CLAIM = "https://ecom-200825/roles";
+const ROLES_CLAIM = "https://ecom-app/roles";
 
 export enum AppRole {
   USER = "user",

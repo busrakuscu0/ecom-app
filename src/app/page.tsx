@@ -1,20 +1,15 @@
-import { auth0 } from "@/lib/auth0";
+import Image from "next/image";
 
 export default async function Home() {
-  //TODO: CONVERT TO COMPONENT
-  const session = await auth0.getSession();
-
-  if (!session) {
-    return (
-      <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-        <a href="/auth/login">Log in</a>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black h-screen">
-      <a href="/auth/logout">Log out</a>
+    <div className="flex ">
+      <Image
+        className="w-full h-screen object-cover"
+        src="/hero-image.jpg"
+        alt="Placeholder"
+        width={400}
+        height={400}
+      />
     </div>
   );
 }

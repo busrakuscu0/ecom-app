@@ -2,11 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import {
-  CircleAlertIcon,
-  CircleCheckIcon,
-  CircleDashedIcon,
-} from "lucide-react";
+import Image from "next/image";
 
 import {
   NavigationMenu,
@@ -17,94 +13,87 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { useUser } from "@auth0/nextjs-auth0";
 
 export default function Navbar() {
-  const components: { title: string; href: string }[] = [
+  const { user, isLoading } = useUser();
+
+  if (isLoading) return <></>;
+
+  const categories: { title: string; href: string }[] = [
     {
-      title: "Wall Art & Prints",
-      href: "/docs/primitives/alert-dialog",
+      title: "Wall Decor",
+      href: "/products/categories/wall-decor",
     },
     {
-      title: "Decorative Accessories",
-      href: "/docs/primitives/hover-card",
+      title: "Decorative Accents",
+      href: "/products/categories/decorative-accents",
     },
     {
-      title: "Scented Candles",
-      href: "/docs/primitives/progress",
+      title: "Candles & Home Fragrance",
+      href: "/products/categories/candles-home-fragrance",
     },
     {
-      title: "Mirrors",
-      href: "/docs/primitives/scroll-area",
-    },
-    {
-      title: "Pillows / Cushions",
-      href: "/docs/primitives/tabs",
-    },
-    {
-      title: "Planters",
-      href: "/docs/primitives/tooltip",
+      title: "Textiles",
+      href: "/products/categories/textiles",
     },
   ];
 
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>New Arrivals</NavigationMenuTrigger>
-        </NavigationMenuItem>
-        <NavigationMenuItem className="hidden md:flex">
-          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                ></ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>With Icon</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[200px]">
-              <li>
+        <div className="flex gap-12">
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle()}
+              render={<Link href="/">New Arrivals</Link>}
+            />
+          </NavigationMenuItem>
+          <NavigationMenuItem className="hidden md:flex">
+            <NavigationMenuTrigger>Collections</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul>
+                {categories.map((category) => (
+                  <ListItem
+                    key={category.title}
+                    title={category.title}
+                    href={category.href}
+                  ></ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </div>
+        <Link href={"/"}>
+          <Image src="/vesper-logo.png" alt="Logo" width={150} height={150} />
+        </Link>
+        <div className="flex gap-8 justify-self-end">
+          {!!user ? (
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                render={<Link href="/auth/logout">Log out</Link>}
+              />
+            </NavigationMenuItem>
+          ) : (
+            <>
+              <NavigationMenuItem>
                 <NavigationMenuLink
+                  className={navigationMenuTriggerStyle()}
+                  render={<Link href="/auth/login">Log In</Link>}
+                />
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  className={navigationMenuTriggerStyle()}
                   render={
-                    <Link href="#" className="flex-row items-center gap-2">
-                      <CircleAlertIcon />
-                      Backlog
-                    </Link>
+                    <Link href="/auth/login?screen_hint=signup">SIGN UP</Link>
                   }
                 />
-                <NavigationMenuLink
-                  render={
-                    <Link href="#" className="flex-row items-center gap-2">
-                      <CircleDashedIcon />
-                      To Do
-                    </Link>
-                  }
-                />
-                <NavigationMenuLink
-                  render={
-                    <Link href="#" className="flex-row items-center gap-2">
-                      <CircleCheckIcon />
-                      Done
-                    </Link>
-                  }
-                />
-              </li>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            className={navigationMenuTriggerStyle()}
-            render={<Link href="/docs">Docs</Link>}
-          />
-        </NavigationMenuItem>
+              </NavigationMenuItem>
+            </>
+          )}
+        </div>
       </NavigationMenuList>
     </NavigationMenu>
   );

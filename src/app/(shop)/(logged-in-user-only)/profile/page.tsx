@@ -3,7 +3,6 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -13,19 +12,40 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 import { useState } from "react";
-import { toast } from "@/components/ui/toast";
+import { toast } from "sonner";
+import { profileSchema } from "@/lib/validation";
 
 export default function ProfilePage() {
   const { user, isLoading } = useUser();
   const [isSaving, setIsSaving] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
 
   const handleSave = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSaving(true);
 
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
+
+    const validation = profileSchema.safeParse(data);
+
+    if (!validation.success) {
+      const flattenedErrors = validation.error.flatten();
+
+      setErrors(flattenedErrors.fieldErrors);
+
+      setIsSaving(false);
+      return;
+    }
+
+    setErrors({});
 
     try {
       const response = await fetch("/api/user/profile", {
@@ -33,7 +53,7 @@ export default function ProfilePage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(validation.data),
       });
 
       if (response.ok) {
@@ -48,18 +68,20 @@ export default function ProfilePage() {
     }
   };
 
-  // Show a spinner while Auth0 is fetching user data
   if (isLoading) {
     return (
-      <div className="flex justify-center p-20">
-        <Spinner />
-      </div>
+      <Button disabled size="sm">
+        <Spinner data-icon="inline-start" />
+        Loading...
+      </Button>
     );
   }
 
   return (
-    <div className="container max-w-3xl mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold mb-6">Account Settings</h1>
+    <div className="max-2xl md:max-w-3xl mx-auto py-6 px-2 md:py-10 md:px-4">
+      <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">
+        Account Settings
+      </h1>
 
       <form onSubmit={handleSave}>
         <Card>
@@ -70,62 +92,171 @@ export default function ProfilePage() {
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="space-y-6">
-            {/* First Name & Last Name */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="firstName">First Name</Label>
+          <CardContent className="flex flex-col gap-6">
+            <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Field>
+                <FieldLabel htmlFor="firstName">First Name</FieldLabel>
                 <Input
                   id="firstName"
+                  name="firstName"
+                  type="text"
                   defaultValue={user?.name?.split(" ")[0] || ""}
                   placeholder="John"
+                  aria-invalid={!!errors.firstName}
+                  aria-describedby={
+                    errors.firstName ? "firstName-error" : undefined
+                  }
                 />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name</Label>
+                {errors.firstName && (
+                  <p
+                    id="firstName-error"
+                    aria-live="polite"
+                    className="text-xs text-destructive"
+                  >
+                    {errors.firstName}
+                  </p>
+                )}
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="lastName">Last Name</FieldLabel>
                 <Input
                   id="lastName"
+                  name="lastName"
+                  type="text"
                   defaultValue={user?.name?.split(" ")[1] || ""}
                   placeholder="Doe"
+                  aria-invalid={!!errors.lastName}
+                  aria-describedby={
+                    errors.lastName ? "lastName-error" : undefined
+                  }
                 />
-              </div>
-            </div>
+                {errors.lastName && (
+                  <p
+                    id="lastName-error"
+                    aria-live="polite"
+                    className="text-xs text-destructive"
+                  >
+                    {errors.lastName}
+                  </p>
+                )}
+              </Field>
+              <Field className="md:col-span-2">
+                <FieldLabel htmlFor="email">Email Address</FieldLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  defaultValue={user?.email || ""}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? "email-error" : undefined}
+                />
+                {errors.email && (
+                  <p
+                    id="email-error"
+                    aria-live="polite"
+                    className="text-xs text-destructive"
+                  >
+                    {errors.email}
+                  </p>
+                )}
+              </Field>
+            </FieldGroup>
 
-            {/* Email Address (Usually read-only) */}
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
+            <FieldSet className="w-full">
+              <FieldLegend className="text-lg font-medium mb-2 md:mb-4">
+                Address Information
+              </FieldLegend>
+              <FieldGroup>
+                <Field>
+                  <FieldLabel htmlFor="street">Street Address</FieldLabel>
+                  <Input
+                    id="street"
+                    name="street"
+                    type="text"
+                    placeholder="123 Main St"
+                    aria-invalid={!!errors.street}
+                    aria-describedby={
+                      errors.street ? "street-error" : undefined
+                    }
+                  />
+                  {errors.street && (
+                    <p
+                      id="street-error"
+                      aria-live="polite"
+                      className="text-xs text-destructive"
+                    >
+                      {errors.street}
+                    </p>
+                  )}
+                </Field>
+                <div className="grid grid-cols-2 gap-4">
+                  <Field>
+                    <FieldLabel htmlFor="city">City</FieldLabel>
+                    <Input
+                      id="city"
+                      name="city"
+                      type="text"
+                      placeholder="New York"
+                      aria-invalid={!!errors.city}
+                      aria-describedby={errors.city ? "city-error" : undefined}
+                    />
+                    {errors.city && (
+                      <p
+                        id="city-error"
+                        aria-live="polite"
+                        className="text-xs text-destructive"
+                      >
+                        {errors.city}
+                      </p>
+                    )}
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="zip">Postal Code</FieldLabel>
+                    <Input
+                      id="zip"
+                      name="zip"
+                      type="text"
+                      placeholder="90502"
+                      aria-invalid={!!errors.zip}
+                      aria-describedby={errors.zip ? "zip-error" : undefined}
+                    />
+                    {errors.zip && (
+                      <p
+                        id="zip-error"
+                        aria-live="polite"
+                        className="text-xs text-destructive"
+                      >
+                        {errors.zip}
+                      </p>
+                    )}
+                  </Field>
+                </div>
+              </FieldGroup>
+            </FieldSet>
+
+            <FieldSet>
+              <FieldLabel htmlFor="phone">Phone Number</FieldLabel>
               <Input
-                id="email"
-                type="email"
-                defaultValue={user?.email || ""}
-                readOnly
-                className="bg-gray-50"
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="+1 (555) 000-0000"
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? "phone-error" : undefined}
               />
-              <p className="text-xs text-muted-foreground">
-                Contact support to change your email address.
-              </p>
-            </div>
-
-            {/* Delivery Address */}
-            <div className="space-y-2">
-              <Label htmlFor="address">Delivery Address</Label>
-              <Input id="address" placeholder="123 Main St, Apt 4B..." />
-            </div>
-
-            {/* City & Phone Number */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="city">City</Label>
-                <Input id="city" placeholder="e.g. New York" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" />
-              </div>
-            </div>
+              {errors.phone && (
+                <p
+                  id="phone-error"
+                  aria-live="polite"
+                  className="text-xs text-destructive"
+                >
+                  {errors.phone}
+                </p>
+              )}
+            </FieldSet>
           </CardContent>
 
-          <CardFooter className="flex justify-end border-t p-6">
+          <CardFooter className="flex justify-end border-t p-4 md:p-6">
             <Button type="submit" disabled={isSaving}>
               {isSaving ? "Saving..." : "Save Changes"}
             </Button>

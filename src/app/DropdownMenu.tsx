@@ -17,11 +17,12 @@ export function DropdownMenuBasic() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
+        aria-label="User dropdown menu"
         render={
           <UserCircleIcon
-            color="#484747"
             size={28}
             className="cursor-pointer"
+            aria-hidden="true"
           />
         }
       />

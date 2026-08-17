@@ -17,9 +17,12 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { buttonVariants } from "@/components/ui/button";
 import { DropdownMenuBasic } from "./DropdownMenu";
 import { Spinner } from "@/components/ui/spinner";
+import { useTheme } from "next-themes";
+import { SwitchDarkMode } from "./SwitchDarkMode";
 
 export default function Navbar() {
   const { user, isLoading } = useUser();
+  const { theme, setTheme } = useTheme();
 
   if (isLoading) return <Spinner>Loading...</Spinner>;
 
@@ -47,7 +50,21 @@ export default function Navbar() {
       <NavigationMenu>
         <NavigationMenuList>
           <Link href={"/"}>
-            <Image src="/logo.png" alt="Logo" width={100} height={100} />
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={100}
+              height={100}
+              className="block dark:hidden"
+            />
+
+            <Image
+              src="/logo-dark.png"
+              alt="Logo"
+              width={100}
+              height={100}
+              className="hidden dark:block"
+            />
           </Link>
           <div className="flex gap-4">
             <NavigationMenuItem>
@@ -95,6 +112,7 @@ export default function Navbar() {
             )}
           </div>
         </NavigationMenuList>
+        <SwitchDarkMode />
       </NavigationMenu>
     </header>
   );

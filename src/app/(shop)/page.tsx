@@ -4,11 +4,11 @@ export default async function Home() {
   return (
     <div className="flex ">
       <Image
-        className="w-full h-screen object-cover"
-        src="/hero-image.jpg"
+        className="w-full h-[60vh] object-cover"
+        src="/hero-image.png"
         alt="Placeholder"
-        width={400}
-        height={400}
+        width={500}
+        height={500}
       />
     </div>
   );

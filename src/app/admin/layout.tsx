@@ -1,5 +1,6 @@
 import { requireAdmin } from "@/lib/auth0";
 import type { Metadata } from "next";
+import { AppSidebar } from "../Sidebar";
 
 export const metadata: Metadata = {
   title: "Ecommmerce Admin",
@@ -9,6 +10,10 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   await requireAdmin();
 
-  //TODO: Make sure only admin user can access this page.
-  return <div>{children}</div>;
+  return (
+    <div>
+      <AppSidebar />
+      {children}
+    </div>
+  );
 }

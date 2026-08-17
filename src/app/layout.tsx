@@ -34,10 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         inter.variable,
       )}
     >
-      <body className="min-h-full bg-muted text-foreground">
-        <Navbar />
-        {children}
-      </body>
+      <body className="min-h-full bg-muted text-foreground">{children}</body>
     </html>
   );
 }

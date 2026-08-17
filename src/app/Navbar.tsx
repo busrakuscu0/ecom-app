@@ -14,11 +14,14 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { useUser } from "@auth0/nextjs-auth0";
+import { buttonVariants } from "@/components/ui/button";
+import { DropdownMenuBasic } from "./DropdownMenu";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function Navbar() {
   const { user, isLoading } = useUser();
 
-  if (isLoading) return <></>;
+  if (isLoading) return <Spinner>Loading...</Spinner>;
 
   const categories: { title: string; href: string }[] = [
     {
@@ -40,62 +43,60 @@ export default function Navbar() {
   ];
 
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <div className="flex gap-12">
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle()}
-              render={<Link href="/">New Arrivals</Link>}
-            />
-          </NavigationMenuItem>
-          <NavigationMenuItem className="hidden md:flex">
-            <NavigationMenuTrigger>Collections</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul>
-                {categories.map((category) => (
-                  <ListItem
-                    key={category.title}
-                    title={category.title}
-                    href={category.href}
-                  ></ListItem>
-                ))}
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        </div>
-        <Link href={"/"}>
-          <Image src="/vesper-logo.png" alt="Logo" width={150} height={150} />
-        </Link>
-        <div className="flex gap-8 justify-self-end">
-          {!!user ? (
+    <header className="w-full flex items-center justify-between">
+      <NavigationMenu>
+        <NavigationMenuList>
+          <Link href={"/"}>
+            <Image src="/logo.png" alt="Logo" width={100} height={100} />
+          </Link>
+          <div className="flex gap-4">
             <NavigationMenuItem>
               <NavigationMenuLink
                 className={navigationMenuTriggerStyle()}
-                render={<Link href="/auth/logout">Log out</Link>}
+                render={<Link href="/">New Arrivals</Link>}
               />
             </NavigationMenuItem>
-          ) : (
-            <>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  className={navigationMenuTriggerStyle()}
-                  render={<Link href="/auth/login">Log In</Link>}
-                />
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  className={navigationMenuTriggerStyle()}
-                  render={
-                    <Link href="/auth/login?screen_hint=signup">SIGN UP</Link>
-                  }
-                />
-              </NavigationMenuItem>
-            </>
-          )}
-        </div>
-      </NavigationMenuList>
-    </NavigationMenu>
+            <NavigationMenuItem className="hidden md:flex">
+              <NavigationMenuTrigger>Collections</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul>
+                  {categories.map((category) => (
+                    <ListItem
+                      key={category.title}
+                      title={category.title}
+                      href={category.href}
+                    ></ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </div>
+
+          <div className="flex gap-4 justify-self-end">
+            {!!user ? (
+              <DropdownMenuBasic />
+            ) : (
+              <>
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    className={buttonVariants({ variant: "secondary" })}
+                    render={<Link href="/auth/login">Log In</Link>}
+                  />
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    className={buttonVariants({ variant: "default" })}
+                    render={
+                      <Link href="/auth/login?screen_hint=signup">SIGN UP</Link>
+                    }
+                  />
+                </NavigationMenuItem>
+              </>
+            )}
+          </div>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </header>
   );
 }
 

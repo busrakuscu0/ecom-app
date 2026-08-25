@@ -20,6 +20,7 @@ model Product {
   description String
   priceCents  Int
   currency    Currency @default(EUR)
+  category    Category
   stock       Int      @default(0)
   imageUrls   String[]
   isActive    Boolean  @default(true)
@@ -31,6 +32,14 @@ model Product {
 
 enum Currency {
   EUR
-  USD
+  GBP
   TRY
+}
+
+enum Category {
+  ELECTRONICS
+  CLOTHING
+  HOME
+  SPORTS
+  OTHER
 }

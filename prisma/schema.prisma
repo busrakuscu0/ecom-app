@@ -23,7 +23,7 @@ model Product {
   category    Category
   stock       Int      @default(0)
   imageUrls   String[]
-  isActive    Boolean  @default(true)
+  isActive    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

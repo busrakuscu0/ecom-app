@@ -4,10 +4,10 @@ import { AppSidebar } from "../Sidebar";
 
 export const metadata: Metadata = {
   title: "Ecommmerce Admin",
-  description: "Admin ecommerce dashboard",
+  description: "Admin ecommerce platform",
 };
 
-export default async function RootLayout({ children }: LayoutProps<"/">) {
+export default async function AdminLayout({ children }: LayoutProps<"/">) {
   await requireAdmin();
 
   return (

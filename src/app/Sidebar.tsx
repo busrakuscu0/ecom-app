@@ -54,7 +54,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <Sidebar collapsible="offcanvas" {...props}>
         <SidebarHeader>
           <Link href={"/"}>
-            <Image src="/logo.png" alt="Logo" width={100} height={100} />
+            <Image src="/logo-image.png" alt="Logo" width={100} height={100} />
           </Link>
         </SidebarHeader>
 

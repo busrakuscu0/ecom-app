@@ -11,13 +11,12 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { useUser } from "@auth0/nextjs-auth0";
 import { buttonVariants } from "@/components/ui/button";
 import { DropdownMenuBasic } from "./DropdownMenu";
 import { Spinner } from "@/components/ui/spinner";
-import { SwitchDarkMode } from "./SwitchDarkMode";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default function Navbar() {
   const { user, isLoading } = useUser();
@@ -27,6 +26,8 @@ export default function Navbar() {
   const mainCategories: {
     title: string;
     subcategories: { title: string; href: string }[];
+    shopby: { title: string; href: string }[];
+    img: string;
   }[] = [
     {
       title: "Living Room",
@@ -52,6 +53,16 @@ export default function Navbar() {
           href: "/products/living-room/rugs",
         },
       ],
+      shopby: [
+        { title: "New Arrivals", href: "/products/living-room/news" },
+        { title: "Best Sellers", href: "/products/living-room/best-sellers" },
+        { title: "Sale", href: "/products/living-room/sale" },
+        {
+          title: "Sustainable Picks",
+          href: "/products/living-room/picks",
+        },
+      ],
+      img: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=400&h=300&fit=crop&auto=format",
     },
     {
       title: "Bedroom",
@@ -74,6 +85,16 @@ export default function Navbar() {
           href: "/products/bedroom/mirrors",
         },
       ],
+      shopby: [
+        { title: "New Arrivals", href: "/products/bedroom/news" },
+        { title: "Best Sellers", href: "/products/bedroom/best-sellers" },
+        { title: "Sale", href: "/products/bedroom/sale" },
+        {
+          title: "Sustainable Picks",
+          href: "/products/bedroom/picks",
+        },
+      ],
+      img: "https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?w=400&h=300&fit=crop&auto=format",
     },
     {
       title: "Kitchen & Dining",
@@ -99,6 +120,19 @@ export default function Navbar() {
           href: "/products/kitchen-dining/glassware",
         },
       ],
+      shopby: [
+        { title: "New Arrivals", href: "/products/kitchen-dining/news" },
+        {
+          title: "Best Sellers",
+          href: "/products/kitchen-dining/best-sellers",
+        },
+        { title: "Sale", href: "/products/kitchen-dining/sale" },
+        {
+          title: "Sustainable Picks",
+          href: "/products/kitchen-dining/picks",
+        },
+      ],
+      img: "https://images.unsplash.com/photo-1770731206301-43a9683f3438?w=400&h=300&fit=crop&auto=format",
     },
     {
       title: "Lighting",
@@ -121,6 +155,16 @@ export default function Navbar() {
           href: "/products/lighting/outdoor-lighting",
         },
       ],
+      shopby: [
+        { title: "New Arrivals", href: "/products/lighting/news" },
+        { title: "Best Sellers", href: "/products/lighting/best-sellers" },
+        { title: "Sale", href: "/products/lighting/sale" },
+        {
+          title: "Sustainable Picks",
+          href: "/products/lighting/picks",
+        },
+      ],
+      img: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400&h=300&fit=crop&auto=format",
     },
     {
       title: "Textiles",
@@ -146,6 +190,16 @@ export default function Navbar() {
           href: "/products/textiles/table-linen",
         },
       ],
+      shopby: [
+        { title: "New Arrivals", href: "/products/textiles/news" },
+        { title: "Best Sellers", href: "/products/textiles/best-sellers" },
+        { title: "Sale", href: "/products/textiles/sale" },
+        {
+          title: "Sustainable Picks",
+          href: "/products/textiles/picks",
+        },
+      ],
+      img: "https://images.unsplash.com/photo-1667915981646-3ec32877dfbf?w=400&h=300&fit=crop&auto=format",
     },
   ];
 
@@ -158,7 +212,7 @@ export default function Navbar() {
               <Image
                 src="/logo-image.png"
                 alt="Logo"
-                width={120}
+                width={100}
                 height={80}
                 className="block dark:hidden"
               />
@@ -177,15 +231,46 @@ export default function Navbar() {
               <NavigationMenuItem key={category.title}>
                 <NavigationMenuTrigger>{category.title}</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul>
-                    {category.subcategories.map((sub) => (
-                      <ListItem
-                        key={sub.title}
-                        title={sub.title}
-                        href={sub.href}
-                      />
-                    ))}
-                  </ul>
+                  <div>
+                    <h2 className="text-xs tracking-widest text-primary mb-4">
+                      CATEGORIES
+                    </h2>
+                    <ul>
+                      {category.subcategories.map((sub) => (
+                        <ListItem
+                          key={sub.title}
+                          title={sub.title}
+                          href={sub.href}
+                        />
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h2 className="text-xs tracking-widest text-primary mb-4">
+                      SHOP BY
+                    </h2>
+                    <ul className="space-y-2">
+                      {category.shopby.map((shop) => (
+                        <ListItem
+                          key={shop.title}
+                          title={shop.title}
+                          href={shop.href}
+                        />
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="relative overflow-hidden bg-[#F2EDE3]">
+                    <img
+                      src={category.img}
+                      alt={category.title}
+                      className="w-full h-full object-contain"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-[#2C2A27]/50 to-transparent flex items-end p-4">
+                      <span className="font-serif text-lg text-[#FAF8F4] font-300">
+                        Shop {category.title}
+                      </span>
+                    </div>
+                  </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             ))}
@@ -214,7 +299,7 @@ export default function Navbar() {
             )}
           </div>
         </NavigationMenuList>
-        <SwitchDarkMode />
+        <ThemeToggle />
       </NavigationMenu>
     </header>
   );

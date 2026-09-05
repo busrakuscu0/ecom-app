@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "./Navbar";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,10 +38,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         geistSans.variable,
         geistMono.variable,
         "font-sans",
-        inter.variable,
+        fraunces.variable,
       )}
     >
-      <body className="min-h-full bg-muted text-foreground">
+      <body className="min-h-full bg-background text-foreground">
         <Navbar />
         {children}
         <Toaster></Toaster>

@@ -212,8 +212,8 @@ export default function Navbar() {
               <Image
                 src="/logo-image.png"
                 alt="Logo"
-                width={100}
-                height={80}
+                width={120}
+                height={100}
                 className="block dark:hidden"
               />
 
@@ -221,7 +221,7 @@ export default function Navbar() {
                 src="/logo-dark-image.png"
                 alt="Logo"
                 width={120}
-                height={80}
+                height={100}
                 className="hidden dark:block"
               />
             </Link>

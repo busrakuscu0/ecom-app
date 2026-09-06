@@ -11,9 +11,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const resolvedSearchParams = await searchParams;
 
   return (
-    <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">
+    <main className="mx-auto w-full max-w-8xl flex-1 py-8">
       <Hero />
-      <div className="mb-8 space-y-2">
+      <div className="mb-8 space-y-2 px-12">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">
           Products
         </h1>

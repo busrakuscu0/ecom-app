@@ -17,7 +17,7 @@ export default function AdminUsersPage() {
           Users
         </h1>
         <p className="text-sm text-muted-foreground">
-          Manage store customers and admin accounts.
+          Manage store users and admin accounts.
         </p>
       </div>
 

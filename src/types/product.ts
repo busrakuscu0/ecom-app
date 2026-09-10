@@ -1,21 +1,21 @@
 export enum ProductCategory {
-  ELECTRONICS = "ELECTRONICS",
-  CLOTHING = "CLOTHING",
-  HOME = "HOME",
-  SPORTS = "SPORTS",
-  OTHER = "OTHER",
+  LIVING_ROOM = "LIVING_ROOM",
+  BEDROOM = "BEDROOM",
+  KITCHEN = "KITCHEN",
+  LIGHTING = "LIGHTING",
+  TEXTILES = "TEXTILES",
 }
 
 export const PRODUCT_CATEGORY_OPTIONS: {
   value: ProductCategory;
   label: string;
 }[] = [
-  { value: ProductCategory.ELECTRONICS, label: "Electronics" },
-  { value: ProductCategory.CLOTHING, label: "Clothing" },
-  { value: ProductCategory.HOME, label: "Home" },
-  { value: ProductCategory.SPORTS, label: "Sports" },
-  { value: ProductCategory.OTHER, label: "Other" },
-];
+  { value: ProductCategory.LIVING_ROOM, label: "Living Room" },
+  { value: ProductCategory.BEDROOM, label: "Bedroom" },
+  { value: ProductCategory.KITCHEN, label: "Kitchen & Dining" },
+  { value: ProductCategory.LIGHTING, label: "Lighting" },
+  { value: ProductCategory.TEXTILES, label: "Textiles" },
+] as const;
 
 export const PRODUCT_CATEGORY_FILTER_OPTIONS: {
   value: ProductCategory | "all";

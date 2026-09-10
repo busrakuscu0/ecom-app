@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import {
-  Sidebar,
+  Sidebar as SidebarPrimitive,
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
@@ -21,9 +21,10 @@ import {
   PackageIcon,
   UsersIcon,
   ArrowDownRightIcon,
+  PackagePlus,
 } from "lucide-react";
 
-const listitems = [
+const adminLinks = [
   {
     title: "Dashboard",
     href: "/admin",
@@ -39,19 +40,22 @@ const listitems = [
     href: "/admin/products",
     icon: PackageIcon,
   },
+  { title: "Create product", href: "/admin/products/new", icon: PackagePlus },
   {
-    title: "Customers",
-    href: "/admin/customers",
+    title: "Users",
+    href: "/admin/users",
     icon: UsersIcon,
   },
-];
+] as const;
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function Sidebar({
+  ...props
+}: React.ComponentProps<typeof SidebarPrimitive>) {
   const pathname = usePathname();
 
   return (
     <SidebarProvider>
-      <Sidebar collapsible="offcanvas" {...props}>
+      <SidebarPrimitive collapsible="offcanvas" {...props}>
         <SidebarHeader>
           <Link href={"/"}>
             <Image src="/logo-image.png" alt="Logo" width={100} height={100} />
@@ -60,7 +64,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
         <SidebarContent>
           <SidebarMenu>
-            {listitems.map((item) => {
+            {adminLinks.map((item) => {
               const Icon = item.icon;
               return (
                 <SidebarMenuItem key={item.href}>
@@ -93,7 +97,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
-      </Sidebar>
+      </SidebarPrimitive>
     </SidebarProvider>
   );
 }

@@ -1,6 +1,6 @@
 import { requireAdmin } from "@/lib/auth0";
 import type { Metadata } from "next";
-import { AppSidebar } from "../Sidebar";
+import { Sidebar } from "../../components/layout/Sidebar";
 
 export const metadata: Metadata = {
   title: "Ecommmerce Admin",
@@ -12,7 +12,7 @@ export default async function AdminLayout({ children }: LayoutProps<"/">) {
 
   return (
     <div>
-      <AppSidebar />
+      <Sidebar />
       {children}
     </div>
   );

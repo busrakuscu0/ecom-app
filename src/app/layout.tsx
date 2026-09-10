@@ -3,7 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
-import Navbar from "./Navbar";
+import Navbar from "../components/layout/Navbar";
 
 const inter = Inter({
   subsets: ["latin"],

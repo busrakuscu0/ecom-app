@@ -37,9 +37,9 @@ enum Currency {
 }
 
 enum Category {
-  ELECTRONICS
-  CLOTHING
-  HOME
-  SPORTS
-  OTHER
+  LIVING_ROOM
+  BEDROOM
+  KITCHEN
+  LIGHTING
+  TEXTILES
 }

@@ -28,7 +28,7 @@ export function DropdownMenuBasic() {
         <DropdownMenuGroup>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuItem>
-            <Link href="/profile">Profile</Link>
+            <Link href="/profile">Account Settings</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>Billing</DropdownMenuItem>
           <DropdownMenuItem>Orders</DropdownMenuItem>

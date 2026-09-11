@@ -42,8 +42,8 @@ const adminLinks = [
   },
   { title: "Create product", href: "/admin/products/new", icon: PackagePlus },
   {
-    title: "Users",
-    href: "/admin/users",
+    title: "Customers",
+    href: "/admin/customers",
     icon: UsersIcon,
   },
 ] as const;
@@ -58,7 +58,21 @@ export function Sidebar({
       <SidebarPrimitive collapsible="offcanvas" {...props}>
         <SidebarHeader>
           <Link href={"/"}>
-            <Image src="/logo-image.png" alt="Logo" width={100} height={100} />
+            <Image
+              src="/logo-image.png"
+              alt="Logo"
+              width={120}
+              height={100}
+              className="block dark:hidden"
+            />
+
+            <Image
+              src="/logo-dark-image.png"
+              alt="Logo"
+              width={120}
+              height={100}
+              className="hidden dark:block"
+            />
           </Link>
         </SidebarHeader>
 
@@ -86,14 +100,10 @@ export function Sidebar({
             })}
             <SidebarSeparator />
             <SidebarMenuItem>
-              <SidebarMenuButton
-                render={
-                  <Link href="/">
-                    <ArrowDownRightIcon />
-                    Back to Store
-                  </Link>
-                }
-              />
+              <SidebarMenuButton render={<Link href="/" />}>
+                <ArrowDownRightIcon />
+                Back to Store
+              </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>

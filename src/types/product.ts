@@ -1,9 +1,9 @@
 export enum ProductCategory {
-  LIVING_ROOM = "LIVING_ROOM",
-  BEDROOM = "BEDROOM",
-  KITCHEN = "KITCHEN",
-  LIGHTING = "LIGHTING",
-  TEXTILES = "TEXTILES",
+  LIVING_ROOM = "Living Room",
+  BEDROOM = "Bedroom",
+  KITCHEN = "Kitchen",
+  LIGHTING = "Lighting",
+  TEXTILES = "Textiles",
 }
 
 export const PRODUCT_CATEGORY_OPTIONS: {
@@ -34,10 +34,10 @@ export function formatCategoryLabel(category: ProductCategory): string {
 }
 
 export enum ProductSort {
-  NAME_ASC = "name_asc",
-  NAME_DESC = "name_desc",
-  PRICE_ASC = "price_asc",
-  PRICE_DESC = "price_desc",
+  NAME_ASC = "Name (A–Z)",
+  NAME_DESC = "Name (Z–A)",
+  PRICE_ASC = "Price (low to high)",
+  PRICE_DESC = "Price (high to low)",
 }
 
 export const PRODUCT_SORT_OPTIONS: {

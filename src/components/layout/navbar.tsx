@@ -259,14 +259,14 @@ export default function Navbar() {
                       ))}
                     </ul>
                   </div>
-                  <div className="relative overflow-hidden bg-[#F2EDE3]">
+                  <div className="relative overflow-hidden bg-primary-foreground">
                     <img
                       src={category.img}
                       alt={category.title}
                       className="w-full h-full object-contain"
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-[#2C2A27]/50 to-transparent flex items-end p-4">
-                      <span className="font-serif text-lg text-[#FAF8F4] font-300">
+                    <div className="absolute inset-0 bg-linear-to-t from-secondary-foreground/50 to-transparent flex items-end p-2 md:p-4">
+                      <span className="text-sm md:text-md text-primary-foreground">
                         Shop {category.title}
                       </span>
                     </div>
@@ -284,16 +284,18 @@ export default function Navbar() {
                 <NavigationMenuItem>
                   <NavigationMenuLink
                     className={buttonVariants({ variant: "secondary" })}
-                    render={<Link href="/auth/login">Log In</Link>}
-                  />
+                    render={<Link href="/auth/login" />}
+                  >
+                    Log In
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink
                     className={buttonVariants({ variant: "default" })}
-                    render={
-                      <Link href="/auth/login?screen_hint=signup">SIGN UP</Link>
-                    }
-                  />
+                    render={<Link href="/auth/login?screen_hint=signup" />}
+                  >
+                    SIGN UP
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               </>
             )}

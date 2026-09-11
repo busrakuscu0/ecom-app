@@ -2,7 +2,7 @@
 import {
   createProductDataSchema,
   createProductImagesSchema,
-} from "@/lib/validation";
+} from "@/lib/validation/product";
 import { createProduct as createProductRecord } from "@/lib/products";
 import { Currency } from "@/types/currency";
 import { ProductCategory } from "@/types/product";

@@ -6,18 +6,18 @@ import {
 } from "@/components/ui/card";
 
 export const metadata = {
-  title: "Users",
+  title: "Customers",
 };
 
-export default function AdminUsersPage() {
+export default function AdminCustomersPage() {
   return (
     <main className="space-y-6 p-6">
       <div className="space-y-1">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-          Users
+          Customers
         </h1>
         <p className="text-sm text-muted-foreground">
-          Manage store users and admin accounts.
+          Manage store customers and admin accounts.
         </p>
       </div>
 
@@ -25,7 +25,7 @@ export default function AdminUsersPage() {
         <CardHeader>
           <CardTitle>Coming soon</CardTitle>
           <CardDescription>
-            User management will be added in a future lesson.
+            Customer management will be added in a future lesson.
           </CardDescription>
         </CardHeader>
       </Card>

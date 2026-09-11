@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import {
-  Sidebar,
+  Sidebar as SidebarPrimitive,
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
@@ -21,9 +21,10 @@ import {
   PackageIcon,
   UsersIcon,
   ArrowDownRightIcon,
+  PackagePlus,
 } from "lucide-react";
 
-const listitems = [
+const adminLinks = [
   {
     title: "Dashboard",
     href: "/admin",
@@ -39,28 +40,45 @@ const listitems = [
     href: "/admin/products",
     icon: PackageIcon,
   },
+  { title: "Create product", href: "/admin/products/new", icon: PackagePlus },
   {
     title: "Customers",
     href: "/admin/customers",
     icon: UsersIcon,
   },
-];
+] as const;
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function Sidebar({
+  ...props
+}: React.ComponentProps<typeof SidebarPrimitive>) {
   const pathname = usePathname();
 
   return (
     <SidebarProvider>
-      <Sidebar collapsible="offcanvas" {...props}>
+      <SidebarPrimitive collapsible="offcanvas" {...props}>
         <SidebarHeader>
           <Link href={"/"}>
-            <Image src="/logo.png" alt="Logo" width={100} height={100} />
+            <Image
+              src="/logo-image.png"
+              alt="Logo"
+              width={120}
+              height={100}
+              className="block dark:hidden"
+            />
+
+            <Image
+              src="/logo-dark-image.png"
+              alt="Logo"
+              width={120}
+              height={100}
+              className="hidden dark:block"
+            />
           </Link>
         </SidebarHeader>
 
         <SidebarContent>
           <SidebarMenu>
-            {listitems.map((item) => {
+            {adminLinks.map((item) => {
               const Icon = item.icon;
               return (
                 <SidebarMenuItem key={item.href}>
@@ -82,18 +100,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             })}
             <SidebarSeparator />
             <SidebarMenuItem>
-              <SidebarMenuButton
-                render={
-                  <Link href="/">
-                    <ArrowDownRightIcon />
-                    Back to Store
-                  </Link>
-                }
-              />
+              <SidebarMenuButton render={<Link href="/" />}>
+                <ArrowDownRightIcon />
+                Back to Store
+              </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
-      </Sidebar>
+      </SidebarPrimitive>
     </SidebarProvider>
   );
 }

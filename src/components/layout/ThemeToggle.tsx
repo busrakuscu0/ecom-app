@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { MoonIcon } from "lucide-react";
 import { useState } from "react";
 
-export function SwitchDarkMode() {
+export function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
 
   const handleThemeChange = (checked: boolean) => {
@@ -25,7 +25,6 @@ export function SwitchDarkMode() {
         checked={isDark}
         onCheckedChange={handleThemeChange}
       />
-      <MoonIcon aria-hidden="true" size={24} />
     </div>
   );
 }

@@ -21,10 +21,10 @@ export function CreateProductSuccess({ productId }: CreateProductSuccessProps) {
         </code>
       </p>
       <div className="mt-6 flex gap-3">
-        <Button asChild>
+        <Button>
           <Link href="/admin/products/new">Create another product</Link>
         </Button>
-        <Button asChild variant="outline">
+        <Button variant="outline">
           <Link href="/admin/products">View all products</Link>
         </Button>
       </div>

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "User ecommerce platform",
 };
 
-export default async function RootLayout({ children }: LayoutProps<"/">) {
+export default async function UserLayout({ children }: LayoutProps<"/">) {
   await requireUser();
   return <div>{children}</div>;
 }

@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { ProductCatalog } from "@/components/storefront/product-catalog";
-import Link from "next/link";
 import { Hero } from "@/components/storefront/hero";
 
 type HomePageProps = {
@@ -11,9 +9,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const resolvedSearchParams = await searchParams;
 
   return (
-    <main className="mx-auto w-full max-w-8xl flex-1 py-8">
+    <main className="mx-auto w-full max-w-8xl flex-1 px-4 py-6 md:px-6 md:py-8">
       <Hero />
-      <div className="mb-8 space-y-2 px-12">
+      <div className="mb-6 md:mb-8 space-y-2 px-8 md:px-12">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">
           Products
         </h1>

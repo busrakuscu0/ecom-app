@@ -67,9 +67,6 @@ export async function getStorefrontProducts(
 
 export async function getAllProducts(): Promise<Product[]> {
   try {
-    // There were 2 problems:
-    // 1. enum in prisma has EUR, USD, TRY and we have EUR, GBP, TRY in our code
-    // 2. we need to check that the currency and category values are compatible with our TS enums so toProduct() function does that
     const records = await prisma.product.findMany({
       orderBy: { createdAt: "desc" },
     });

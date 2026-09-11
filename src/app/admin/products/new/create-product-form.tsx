@@ -17,13 +17,14 @@ import {
   CreateProductFormValues,
   CreateProductState,
 } from "./action";
+import { CreateProductSuccess } from "./create-product-success";
 
 const initialValues: CreateProductFormValues = {
   name: "",
   description: "",
   price: "",
   currency: Currency.EUR,
-  category: ProductCategory.OTHER,
+  category: ProductCategory.BEDROOM,
   stock: "0",
   isActive: true,
 };
@@ -49,31 +50,7 @@ export function CreateProductForm() {
       ? `retry-${state.values.name}-${state.values.price}-${state.values.stock}`
       : "create-product";
   if (state?.success) {
-    return (
-      <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-foreground">
-          Product created
-        </h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The product was saved to MongoDB and images were uploaded to Vercel
-          Blob.
-        </p>
-        <p className="mt-4 text-sm">
-          Product ID:{" "}
-          <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
-            {state.productId}
-          </code>
-        </p>
-        <div className="mt-6 flex gap-3">
-          <Button asChild>
-            <Link href="/admin/products/new">Create another product</Link>
-          </Button>
-          <Button asChild variant="outline">
-            <Link href="/admin/products">View all products</Link>
-          </Button>
-        </div>
-      </div>
-    );
+    return <CreateProductSuccess productId={state.productId} />;
   }
 
   return (
@@ -287,7 +264,7 @@ export function CreateProductForm() {
         <Button type="submit" disabled={isPending}>
           {isPending ? "Creating product..." : "Create product"}
         </Button>
-        <Button asChild variant="outline" disabled={isPending}>
+        <Button variant="outline" disabled={isPending}>
           <Link href="/admin/products">Cancel</Link>
         </Button>
       </div>
